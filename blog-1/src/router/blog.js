@@ -1,4 +1,4 @@
-const { getList } = require("../controller/blog")
+const { getList, getDetail } = require("../controller/blog")
 const { SuccessModel, ErrorModel } = require('../model/resModel')
 const handleBlogRouter = (req, res) => {
     const method = req.method
@@ -12,9 +12,9 @@ const handleBlogRouter = (req, res) => {
     }
 
     if(method === 'GET' && req.path === '/api/blog/detail') {
-        return {
-            msg: '这是获取博客详情接口'
-        }
+        const id = req.query.id
+        const detailData = getDetail(id)
+        return new SuccessModel(detailData)
     }
 
     if(method === 'POST' && req.path === '/api/blog/new') {
