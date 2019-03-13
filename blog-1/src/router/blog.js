@@ -1,5 +1,7 @@
 const { getList, getDetail } = require("../controller/blog")
 const { SuccessModel, ErrorModel } = require('../model/resModel')
+
+
 const handleBlogRouter = (req, res) => {
     const method = req.method
    
