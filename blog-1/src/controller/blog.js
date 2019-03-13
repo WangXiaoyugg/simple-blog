@@ -29,7 +29,23 @@ const getDetail = (id) => {
     }
 }
 
+const newBlog = (blogData={}) => {
+    // blogData 包涵title, content, author
+    console.log("newBlog data", blogData)
+    return {
+        id: 3,
+
+    }
+}
+
+const updateBlog = (id, blogData={}) => {
+    console.log('id, blogData', id, blogData)
+    return true
+}
+
 module.exports = {
     getList,
     getDetail,
+    newBlog,
+    updateBlog,
 }
