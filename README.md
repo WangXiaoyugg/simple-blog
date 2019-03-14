@@ -18,4 +18,6 @@ API的一部分
   记住输入的root, 密码 
   navichat, workbench 可视化工具 
 - nodejs连接 mysql
+  安装mysql 第三方库
+  封装mysql 常用操作
 - API 连接 mysql
