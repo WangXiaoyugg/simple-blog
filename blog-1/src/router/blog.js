@@ -14,8 +14,10 @@ const handleBlogRouter = (req, res) => {
     if(method === 'GET' && req.path === '/api/blog/list') {
         const author = req.query.author || ''
         const keyword = req.query.keyword || ''
-        const listData = getList(author, keyword)
-        return new SuccessModel(listData)
+        let result = getList(author, keyword)
+        return result.then((listData) => {
+            return new SuccessModel(listData)
+        })
     }
 
     if(method === 'GET' && req.path === '/api/blog/detail') {
