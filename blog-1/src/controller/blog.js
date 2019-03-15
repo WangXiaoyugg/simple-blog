@@ -2,14 +2,14 @@ const { exec } = require('../db/mysql')
 
 const getList = (author, keyword) => {
     // 先返回假数据，格式是正确的
-    let sql = `select * from blog where 1=1`
+    let sql = `select * from blog where 1=1 `
 
     if(author) {
-        sql += `author = "${author}"`
+        sql += `and author = "${author}"`
     }
 
     if(keyword) {
-        sql += `keyword like "%${keyword}%"`
+        sql += `and title like "%${keyword}%"`
     }
 
     return exec(sql)
