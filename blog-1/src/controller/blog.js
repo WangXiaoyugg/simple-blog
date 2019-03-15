@@ -17,23 +17,25 @@ const getList = (author, keyword) => {
 }
 
 const getDetail = (id) => {
-    // 准备返回的假数据
-    return  {
-        id: 1,
-        title: '标题A',
-        content: "内容A",
-        createTime: new Date().getTime(),
-        author: '张三'
-    }
+    let sql = `select * from blog where id = ${id}`
+
+    return exec(sql).then(rowData => {
+        return rowData[0]
+    })
 }
 
 const newBlog = (blogData={}) => {
     // blogData 包涵title, content, author
-    console.log("newBlog data", blogData)
-    return {
-        id: 3,
-
-    }
+    console.log('blogData', blogData);
+    let {title, content, author} = blogData;
+    let createTime = Date.now();
+    let sql = `insert into blog (title, content, author, createTime)  values ("${title}", "${content}","${author}", ${createTime})`
+    return exec(sql).then((insertData) => {
+        console.log("insertData", insertData);
+        return insertData.insertId
+    }).catch(err => {
+        console.log(err)
+    })
 }
 
 const updateBlog = (id, blogData={}) => {

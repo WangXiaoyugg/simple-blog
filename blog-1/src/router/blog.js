@@ -21,15 +21,20 @@ const handleBlogRouter = (req, res) => {
     }
 
     if(method === 'GET' && req.path === '/api/blog/detail') {
-        const detailData = getDetail(id)
-        return new SuccessModel(detailData)
+        const result = getDetail(id)
+        return result.then((detailData) => {
+            return new SuccessModel(detailData);
+        })
     }
 
     if(method === 'POST' && req.path === '/api/blog/new') {
+        req.body.author = 'garen'
         const blogData = req.body
-        console.log(req.body);
-        const data = newBlog(blogData)
-        return new SuccessModel(data);
+        let result = newBlog(blogData);
+        return result.then((blogId) => {
+            return new SuccessModel(blogId);
+        })
+      
     }
 
     if(method === 'POST' && req.path === '/api/blog/update') {
