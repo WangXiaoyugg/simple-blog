@@ -37,5 +37,20 @@ API的一部分
 ### session 是什么
 - cookie 会暴露username, 很危险
 - cookie 中存储userid, server端对应username
-- 
-
+- session 直接使用js变量，放在nodejs进程内存中 
+- 进程的内存有限，访问量过大，内存暴增怎么处理
+- 线上环境是多进程， 进程之间内内存无法共享
+- 使用redis
+  
+## redis
+- web server 最常用的缓存数据库，数据存放在内存中
+- 相比于mysql, 访问速度快内存和硬盘不是一个数量级的
+- 但是成本更高， 可存储的数剧量更小
+- session 访问频繁，对性能要求极高
+- session 可以不考虑断电丢失数据的问题（内存的硬伤）
+- session 数据量不会太大(相比于mysql)
+- 网站数据的操作频率不高，断电不能丢失，必须保留，数据量太大，内存成本太高 
+- 为什么用redis? 不用redis会出现什么问题
+- redis 适合什么场景？ mysql 适合什么场景
+- mac `brew intsall redis`
+  
