@@ -34,3 +34,8 @@ API的一部分
 - server 可以修改cookie 返回给浏览器
 - 浏览器通过js修改cookie,但有限制
 
+### session 是什么
+- cookie 会暴露username, 很危险
+- cookie 中存储userid, server端对应username
+- 
+

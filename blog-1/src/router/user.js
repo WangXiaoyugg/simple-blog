@@ -1,11 +1,6 @@
 const {login} = require("../controller/user")
 const {SuccessModel, ErrorModel} = require("../model/resModel")
 
-const getCookieExpire = () => {
-    let date = new Date()
-    date.setTime(date.getTime() + 24 * 60 * 60 * 1000)
-    return date.toGMTString();
-}
 
 const handleUserRouter = (req, res) => {
     const method = req.method
@@ -17,7 +12,8 @@ const handleUserRouter = (req, res) => {
         let result = login(username, password);
         return result.then(data => {
             if(data.username) {
-                res.setHeader("Set-Cookie", `username=${data.username};path=/;httpOnly;expires=${getCookieExpire()}`);
+                req.session.username = data.username;
+                req.session.realname = data.realname;
                 return new SuccessModel()
             }
             return new ErrorModel('登录失败')
@@ -27,9 +23,9 @@ const handleUserRouter = (req, res) => {
     // 用于测试cookie 是否被修改
     if(method === 'GET' && req.path === '/api/user/login-test') {
         let {username, password} = req.query;
-        if(req.cookies.username) {
+        if(req.session.username) {
             return Promise.resolve(new SuccessModel({
-                data: req.cookies
+                session:req.session
             }))
         } 
         return Promise.resolve(new ErrorModel("登录失败"))
