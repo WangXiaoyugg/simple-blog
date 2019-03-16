@@ -53,11 +53,13 @@ const serverHandle = (req, res) => {
             return;
         }
 
-        let userData = handleUserRouter(req, res);
-        if(userData) {
-            res.end(
-                JSON.stringify(userData)
-            )
+        let userResult = handleUserRouter(req, res);
+        if(userResult) {
+            userResult.then((userData) => {
+                res.end(
+                    JSON.stringify(userData)
+                )
+            })
             return
         }
 
