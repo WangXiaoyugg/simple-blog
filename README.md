@@ -21,3 +21,16 @@ API的一部分
   安装mysql 第三方库
   封装mysql 常用操作
 - API 连接 mysql
+
+
+## 登录
+- cookie
+  
+### cookie 是什么
+- cookie 是存储在浏览器的一段字符串
+- 跨域不共享
+- 非结构化数据，k1=v1,k2=v2,k3=v3
+- 每次发送http请求，会将请求域的cookie 带上
+- server 可以修改cookie 返回给浏览器
+- 浏览器通过js修改cookie,但有限制
+
