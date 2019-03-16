@@ -39,21 +39,25 @@ const handleBlogRouter = (req, res) => {
 
     if(method === 'POST' && req.path === '/api/blog/update') {
         const result = updateBlog(id, req.body)
-        if(result) {
-            return new SuccessModel();
-        } else {
+        return result.then((res) => {
+            if(res) {
+                return new SuccessModel();
+            }
             return new ErrorModel("更新博客失败");
-        }
+        })
         
     }
 
     if(method === 'POST' && req.path === '/api/blog/delete') {
-        const result = deleteBlog(id);
-        if(result) {
-            return new SuccessModel()
-        } else {
-            return new ErrorModel("删除博客失败")
-        }
+        const result = deleteBlog(id, '张三');
+        return result.then(res => {
+            if(res) {
+                return new SuccessModel()
+            } else {
+                return new ErrorModel("删除博客失败")
+            }      
+        })
+        
     }
 }
 

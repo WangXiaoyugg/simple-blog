@@ -26,7 +26,6 @@ const getDetail = (id) => {
 
 const newBlog = (blogData={}) => {
     // blogData 包涵title, content, author
-    console.log('blogData', blogData);
     let {title, content, author} = blogData;
     let createTime = Date.now();
     let sql = `insert into blog (title, content, author, createTime)  values ("${title}", "${content}","${author}", ${createTime})`
@@ -39,13 +38,25 @@ const newBlog = (blogData={}) => {
 }
 
 const updateBlog = (id, blogData={}) => {
-    console.log('id, blogData', id, blogData)
-    return true
+    let {title, content} = blogData;
+    let sql = `update blog set title='${title}', content='${content}' where id=${id}`
+
+    return exec(sql).then((result) => {
+        if(result.affectedRows > 0) {
+            return true;
+        }
+        return false;
+    })
 }
 
-const deleteBlog = (id) => {
-    console.log("id", id)
-    return true;
+const deleteBlog = (id, author) => {
+    let sql = `delete from blog where id=${id} and author='${author}'`
+    return exec(sql).then((res) => {
+        if(res.affectedRows > 0) {
+            return true
+        }
+        return false;
+    })
 }
 
 module.exports = {
