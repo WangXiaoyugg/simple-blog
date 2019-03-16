@@ -2,7 +2,7 @@ const redis = require('redis')
 const { REDIS_CONF } = require("../config/db")
 
 const redisClient = redis.createClient(REDIS_CONF);
-redis.on('error', (err) => {
+redisClient.on('error', (err) => {
     console.log("redis error\n", err)
 })
 
@@ -20,10 +20,6 @@ function set(key, val) {
 
 function get(key) {
     const promise = new Promise((resolve, reject) => {
-        if(!key) {
-            reject("key can't be empty")
-        }
-
         redisClient.get(key, (err,val) => {
             if(err) {
                 reject(err)

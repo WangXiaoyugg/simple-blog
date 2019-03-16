@@ -3,6 +3,8 @@ const handleBlogRouter = require('./src/router/blog')
 const handleUserRouter = require('./src/router/user')
 const notFoundHandler = require('./src/router/404.js')
 
+const {set, get} = require("./src/db/redis")
+
 const getCookieExpire = () => {
     let date = new Date()
     date.setTime(date.getTime() + 24 * 60 * 60 * 1000)
@@ -63,22 +65,47 @@ const serverHandle = (req, res) => {
     })
 
 
-    // 解析Session
+    // 解析 session
+    // let needSetCookie = false;
+    // let userId = req.cookies['userid'];
+    // if(userId) {
+    //     if(!SESSION_DATA[userId]) {
+    //         SESSION_DATA[userId] = {}     
+    //     } 
+    // } else {
+    //     needSetCookie = true;
+    //     userId = `${Date.now()}_${Math.random()}`
+    //     SESSION_DATA[userId] = {}
+    // }
+    // req.session = SESSION_DATA[userId]
+
+
+    // 解析 session, 使用redis连接
     let needSetCookie = false;
-    let userId = req.cookies['userid'];
-    if(userId) {
-        if(!SESSION_DATA[userId]) {
-            SESSION_DATA[userId] = {}     
-        } 
-    } else {
+    let userId = req.cookies.userid;
+    if(!userId) {
         needSetCookie = true;
         userId = `${Date.now()}_${Math.random()}`
-        SESSION_DATA[userId] = {}
+        // 初始化 redis 中的 session
+        set(userId, {});
     }
-    req.session = SESSION_DATA[userId]
+    // userId 存在
+    req.sessionId = userId;
+    get(req.sessionId).then((sessionData) => {
+        if(sessionData == null) {
 
-    // 处理postData
-    getPostData(req).then((postData) => {
+            // 初始化 reids session
+            set(req.sessionId, {})
+            req.session = {}
+        } else {
+            // 设置session
+            req.session = sessionData;
+
+        }
+        return getPostData(req);
+    })
+    .then((postData) => {
+        // 处理postData
         req.body = postData;
 
         let blogResult = handleBlogRouter(req, res);
