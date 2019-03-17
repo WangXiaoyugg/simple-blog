@@ -5,6 +5,8 @@ const notFoundHandler = require('./src/router/404.js')
 
 const {set, get} = require("./src/db/redis")
 
+const { access } = require("./src/utils/log")
+
 const getCookieExpire = () => {
     let date = new Date()
     date.setTime(date.getTime() + 24 * 60 * 60 * 1000)
@@ -45,6 +47,8 @@ const getPostData = (req) => {
 
 
 const serverHandle = (req, res) => {
+    access(`${req.method} -- ${req.url} -- ${req.headers['user-agent']} -- ${Date.now()}`)
+
     // 设置返回JSON格式
     res.setHeader("Content-Type", "application/json")
     

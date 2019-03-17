@@ -17,6 +17,7 @@ API的一部分
   轻量级，易学易用
   记住输入的root, 密码 
   navichat, workbench 可视化工具 
+  `set SQL_SAFE_UPDATES = 0`
 - nodejs连接 mysql
   安装mysql 第三方库
   封装mysql 常用操作
@@ -65,3 +66,30 @@ API的一部分
 - 测试配置文件是否正确 `nginx -t`
 - 启动nginx; 重启 `nginx -s reload`
 - 停止 `nginx -s stop`
+
+## 日志
+- 利用stream 写日志
+- 日志的拆分， 按时间划分日志文件
+- linux的 crontab 命令， 即定时任务
+- access.log 拷贝 重命名 2019-02-10.access.log
+- 清空access.log 文件，继续积累日志
+- 日志分析，分析浏览器的占比
+- 日志按行存储，一行就是一条日志
+- 使用nodejs的 readline, 基于stream
+
+## 安全
+- sql注入，窃取数据库内容，使用sql语句攻击，mysql 使用 escape 特殊字符转意
+- xss攻击， 窃取前端cookie, 掺杂js执行代码, `<script>alert(document.cookis)</script>`, 通过转义实现， xss库
+- 密码加密， 保障用户信息的安全, 数据库被用户攻破，最不应该泄漏就是用户信息，将密码加密
+- DDOS攻击， 需要硬件和服务来支持
+
+## 小结
+- 处理http接口，GET/POST api ,controller和router 拆分
+- 连接数据库， mysql,db,config 模块封装
+- 实现登录，cookie, session, redis, nginx 反向代理
+- 日志功能，stream, contrab, readline
+- 安全, xss,sql注入，密码加密
+- 服务端稳定性
+- 内存CPU 优化和扩展
+- 日志记录
+- 集群和服务拆分，Nodejs web Server, mysql, redis 拆分

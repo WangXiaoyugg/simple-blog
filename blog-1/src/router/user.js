@@ -5,9 +5,8 @@ const {set} = require("../db/redis")
 const handleUserRouter = (req, res) => {
     const method = req.method
     
-    if(method === 'GET' && req.path === '/api/user/login') {
-        // let {username, password} = req.body;
-        let {username, password} = req.query;
+    if(method === 'POST' && req.path === '/api/user/login') {
+        let {username, password} = req.body;
 
         let result = login(username, password);
         return result.then(data => {
@@ -22,16 +21,7 @@ const handleUserRouter = (req, res) => {
         })
     }
 
-    // 用于测试cookie 是否被修改
-    if(method === 'GET' && req.path === '/api/user/login-test') {
-        let {username, password} = req.query;
-        if(req.session.username) {
-            return Promise.resolve(new SuccessModel({
-                session:req.session
-            }))
-        } 
-        return Promise.resolve(new ErrorModel("登录失败"))
-    }
+
 
 }
 

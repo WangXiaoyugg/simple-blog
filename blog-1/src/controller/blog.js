@@ -1,7 +1,6 @@
 const { exec } = require('../db/mysql')
-
+const xss = require('xss')
 const getList = (author, keyword) => {
-    // 先返回假数据，格式是正确的
     let sql = `select * from blog where 1=1 `
 
     if(author) {
@@ -27,6 +26,8 @@ const getDetail = (id) => {
 const newBlog = (blogData={}) => {
     // blogData 包涵title, content, author
     let {title, content, author} = blogData;
+    title = xss(title)
+    content = xss(content)
     let createTime = Date.now();
     let sql = `insert into blog (title, content, author, createTime)  values ("${title}", "${content}","${author}", ${createTime})`
     return exec(sql).then((insertData) => {
@@ -39,6 +40,8 @@ const newBlog = (blogData={}) => {
 
 const updateBlog = (id, blogData={}) => {
     let {title, content} = blogData;
+    title = xss(title)
+    content = xss(content)
     let sql = `update blog set title='${title}', content='${content}' where id=${id}`
 
     return exec(sql).then((result) => {
