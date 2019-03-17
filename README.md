@@ -54,3 +54,14 @@ API的一部分
 - redis 适合什么场景？ mysql 适合什么场景
 - mac `brew intsall redis`
   
+## 前后端联调
+- 准备前台页面
+- 前台在8001 端口， 后台在 8000 端口
+- nginx 高性能web服务器，开源免费
+- 一般用于静态服务，负载均衡
+- 反向代理
+- mac `brew install nginx `
+- nginx 配置位置， `/usr/local/etc/nginx/nginx.conf`
+- 测试配置文件是否正确 `nginx -t`
+- 启动nginx; 重启 `nginx -s reload`
+- 停止 `nginx -s stop`
