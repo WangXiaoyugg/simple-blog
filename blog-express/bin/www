@@ -1,0 +1,103 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+
+// 依赖模块 
+var app = require('../app');
+// https://www.npmjs.com/package/debug
+var debug = require('debug')('blog-express:server');
+var http = require('http');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+ // 设置端口号，默认3000
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+// 创建服务器
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+ // 监听在指定端口
+server.listen(port);
+// 监听错误信息
+server.on('error', onError);
+// 表明服务器是否正在监听连接
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe 如果是NaN 情况 命名为 pipe
+    return val;
+  }
+
+  // 处理端口号大于 0 的情况
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  // 异常的 系统调用 不是监听
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      // 需要更高的优先权
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      // 端口已经被使用
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  // server.address 返回 { port: 12346, family: 'IPv4', address: '127.0.0.1' }
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
