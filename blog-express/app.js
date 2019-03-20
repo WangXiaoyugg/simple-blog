@@ -1,6 +1,7 @@
 const createError = require('http-errors')
 var express = require('express');
 var path = require('path');
+var fs = require('fs')
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -24,7 +25,17 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+const env = process.env.NODE_ENV
+if(env === 'dev') {
+  app.use(logger('dev'));
+} else {
+  let accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs','access.log'), { flags: 'a' })
+  app.use(logger('combined', {
+    stream: accessLogStream,
+  }))
+}
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

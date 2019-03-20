@@ -20,7 +20,6 @@ router.get('/list', function(req, res, next) {
     if(req.query.isadmin) {
 
         // 不是管理员不让查看
-        console.log("req.session.username", req.session.username)
         if(req.session.username == null) {
             res.json(new ErrorModel('未登录'))
             return;
@@ -40,7 +39,6 @@ router.get('/detail', function(req, res, next) {
     const id = req.query.id
     const result = getDetail(id)
     return result.then((detailData) => {
-        console.log('detailData: ', detailData)
         res.json(new SuccessModel(detailData));
     })
 });
