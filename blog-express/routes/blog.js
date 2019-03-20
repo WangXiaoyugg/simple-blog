@@ -14,6 +14,14 @@ const { SuccessModel, ErrorModel } = require('../model/resModel')
 router.get('/list', function(req, res, next) {
     const author = req.query.author || ''
     const keyword = req.query.keyword || ''
+    
+    // 如果是管理员
+    if(req.query.isadmin) {
+
+        // 强制查询自己的博客
+        author = req.session.username;
+    }
+
     let result = getList(author, keyword)
     return result.then((listData) => {
         res.json(new SuccessModel(listData)) 

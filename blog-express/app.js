@@ -6,15 +6,18 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const session = require('express-session');
-
+const RedisStore = require('connect-redis')(session)
 // var index = require('./routes/index');
 // var users = require('./routes/users');
 const blog = require('./routes/blog');
 const user = require('./routes/user');
 
+const redisClient = require('./db/redis');
+const sessionStore = new RedisStore({
+  client: redisClient
+})
 
 var app = express();
-
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
@@ -28,13 +31,15 @@ app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'garen_123',
-  resave: true,
-  saveUninitialized: true,
+  resave: false,
+  saveUninitialized: false,
   cookie: {
-    path: '/',
-    httpOnly: true,
-    expire: 24 * 60 * 60 * 1000,
-  }
+    // path: '/',
+    // httpOnly: true,
+    expires: new Date().getTime() + 24 * 60 * 60 * 1000,
+    maxAge: 24 * 60 * 60 * 1000,
+  },
+  store: sessionStore,
 }))
 // app.use('/', index);
 // app.use('/users', users);
