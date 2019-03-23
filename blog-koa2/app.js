@@ -11,6 +11,11 @@ const users = require('./routes/users')
 const blog = require('./routes/blog')
 const user = require('./routes/user')
 
+const session = require('koa-generic-session')
+const redisStore = require('koa-redis')
+
+app.keys = ['garen']
+
 // error handler
 onerror(app)
 
@@ -34,6 +39,16 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
+app.use(session({
+  cookie: {
+    path: '/',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000
+  },
+  store: redisStore({
+    all: "127.0.0.1:6379"
+  })
+}))
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())

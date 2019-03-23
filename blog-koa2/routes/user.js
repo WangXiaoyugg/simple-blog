@@ -13,4 +13,14 @@ router.post('/login', async function (ctx, next) {
       }
   }  
 })
+
+router.get('/session-test', async function (ctx, next) {
+    if(ctx.session.count === null) {
+        ctx.session.count = 0
+    }
+    ctx.session.count++
+    ctx.body = {
+        count: ctx.session.count,
+    }
+  })
 module.exports = router
