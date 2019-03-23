@@ -101,8 +101,34 @@ API的一部分
 - 初始化环境，插件和路由
 - 开发接口
 - 处理登录
+- 处理日志，morgan写入access log
+- 自定义日志，console.log, console.error
+- 日志拆分，日志分析
   
 ### express 中间件
 - 中间件是什么，
 - 中间件怎么使用
 - 中间件的执行顺序
+- 中间件原理
+- app.use 的注册中间件，收集中间件
+- 遇到http请求，根据path 和method判断触发那些中间件
+- 实现next机制，即上一步通过next执行下一步
+- 实现一个简单的express
+- 阅读express 使用到第三方包源码和实现
+
+
+## koa
+- 原生支持async/await
+- egg.js等企业级框架底层基于koa
+- koa是未来的趋势
+
+### async/await 小结
+- await 后面接 promise对象
+- await 必须包裹在async 函数内
+- async 函数返回的也是一个promise函数
+- try-catch 截获promise的值
+
+### koa2简介
+- 安装脚手架，`npm i koa-generator -g`
+- 初始化代码
+- 介绍中间件
