@@ -50,12 +50,32 @@ function getFileContentPromise(filename) {
     return promise;
 }
 
-getFileContentPromise('a.json').then((aData) => {
-    console.log(aData)
-    return getFileContentPromise(aData.next)
-}).then((bData) => {
-    console.log(bData)
-    return getFileContentPromise(bData.next)
-}).then((cData) => {
-    console.log(cData)
-})
+
+// async function readFileData() {
+//     let aData = await getFileContentPromise("a.json");
+//     console.log("aData: ", aData);
+//     let bData = await getFileContentPromise(aData.next);
+//     console.log("bData: ", bData);
+//     let cData = await getFileContentPromise(bData.next);
+//     console.log("cData: ", cData);
+// }
+// readFileData()
+
+async function readAData() {
+    return await getFileContentPromise('a.json')
+}
+async function test() {
+    let aData = await readAData()
+    console.log("aData ", aData);
+}
+test()
+
+// getFileContentPromise('a.json').then((aData) => {
+//     console.log(aData)
+//     return getFileContentPromise(aData.next)
+// }).then((bData) => {
+//     console.log(bData)
+//     return getFileContentPromise(bData.next)
+// }).then((cData) => {
+//     console.log(cData)
+// })
