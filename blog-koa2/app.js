@@ -13,6 +13,7 @@ const user = require('./routes/user')
 
 const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
+const { REDIS_CONF } = require("./config/db.js")
 
 app.keys = ['garen']
 
@@ -46,7 +47,7 @@ app.use(session({
     maxAge: 24 * 60 * 60 * 1000
   },
   store: redisStore({
-    all: "127.0.0.1:6379"
+    all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
   })
 }))
 // routes

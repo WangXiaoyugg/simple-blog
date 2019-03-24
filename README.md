@@ -131,4 +131,14 @@ API的一部分
 ### koa2简介
 - 安装脚手架，`npm i koa-generator -g`
 - 初始化代码
-- 介绍中间件
+- 介绍中间件，app.use(async fn(ctx, next) {await next()})
+  
+### 开发
+- 登录
+- 开发路由
+- 记录日志
+
+### 总结
+- 使用async/await的优势
+- koa使用，以及如何处理session redis
+- koa2中间件的使用和原理

@@ -52,12 +52,16 @@ function getFileContentPromise(filename) {
 
 
 // async function readFileData() {
+       try {
 //     let aData = await getFileContentPromise("a.json");
 //     console.log("aData: ", aData);
 //     let bData = await getFileContentPromise(aData.next);
 //     console.log("bData: ", bData);
 //     let cData = await getFileContentPromise(bData.next);
 //     console.log("cData: ", cData);
+       }catch(e){
+           console.log(e);
+       }
 // }
 // readFileData()
 
@@ -79,3 +83,4 @@ test()
 // }).then((cData) => {
 //     console.log(cData)
 // })
+
